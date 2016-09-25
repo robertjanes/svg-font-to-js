@@ -8,7 +8,10 @@
 'use strict';
 const fs = require('fs');
 
-function fontToPaths(fontPath) {
+function fontToPaths(fontPath, options) {
+  const prettifySvg = options
+    ? prettifyCheck(options)
+    : false;
   const startParse = process.hrtime();
   svgFontCheck(fontPath);
   const fontFile = fs.readFileSync(fontPath, 'utf8');
@@ -29,7 +32,7 @@ function fontToPaths(fontPath) {
     font.push({
       name: match[1],
       width: parseInt(match[2]),
-      path: prettifyPath(match[3])
+      path: prettifySvg ? prettifySvg(match[3]): match[3]
     });
   }
   const endParse = process.hrtime(startParse);
@@ -37,23 +40,10 @@ function fontToPaths(fontPath) {
   return font;
 }
 
-// Adds spaces in-between letters and numbers
-function prettifyPath(path) {
-  for (let l = 0; l < path.length; l += 1 ) {
-    // If a letter
-    if (!parseInt(path[l]) && path[l] !== ' ' && path[l] !== '-' && path[l] !== '0' && path[l] !== '\n') {
-      // If no space before
-      // Don't add space before if first
-      if (l !== 0 && path[l - 1] !== ' ') {
-        path = path.substring(0, l) + ' ' + path.substring(l);
-        l += 1; // Increase counter for next check
-      }
-      // If no space after
-      // Don't add space after if last
-      if (l !== path.length - 1 && path[l + 1] !== ' ') path = path.substring(0, l + 1) + ' ' + path.substring(l + 1);
-    }
-  }
-  return path;
+function prettifyCheck(options) {
+  return options.prettify
+    ? require('svg-path-prettify')
+    : null;
 }
 
 function svgFontCheck(fontPath) {

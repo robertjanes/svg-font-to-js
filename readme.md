@@ -1,3 +1,3 @@
 # svg-font-to-json
 
-Parses an SVG font into JSON.
+Parses an SVG font to JSON.

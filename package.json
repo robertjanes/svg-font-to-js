@@ -3,6 +3,12 @@
   "version": "0.1.1",
   "description": "svg-font-to-json",
   "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
   "author": "Robert Janes",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "svg-path-prettify": "^0.1.3"
+  }
 }
