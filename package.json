@@ -1,0 +1,8 @@
+{
+  "name": "svg-font-to-json",
+  "version": "0.1.1",
+  "description": "svg-font-to-json",
+  "main": "index.js",
+  "author": "Robert Janes",
+  "license": "ISC"
+}
