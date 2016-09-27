@@ -9,25 +9,23 @@
 const fs = require('fs');
 
 function fontToPaths(fontPath, options) {
+  svgFontCheck(fontPath);
   const prettifySvg = options
     ? prettifyCheck(options)
     : false;
   const startParse = process.hrtime();
-  svgFontCheck(fontPath);
   const fontFile = fs.readFileSync(fontPath, 'utf8');
   const font = [];
   /*
-    Regex below returns results 0–4
-      0 = full <glyph> tag
-      1 = glyph name
-      2 = glyph width
-      3 = glyph path
+    Regex below returns results 0–4:
+      0 = full <glyph> tag      2 = glyph width
+      1 = glyph name            3 = glyph path
   */
   const regex = /<glyph glyph-name="(.*?)"(?:.*?|\s*?)horiz-adv-x="(.*?|)"(?:.*?|\s*?)d="((.|\s)*?)"(?:.*?|\s*?)\/>/g;
   let match;
   while ((match = regex.exec(fontFile)) !== null) {
     if (match.index === regex.lastIndex) {
-        regex.lastIndex++;
+      regex.lastIndex += 1;
     }
     font.push({
       name: match[1],
@@ -36,7 +34,7 @@ function fontToPaths(fontPath, options) {
     });
   }
   const endParse = process.hrtime(startParse);
-  console.log('fontToPaths parse took ' + endParse[0] + 's, ' + (endParse[1] * 1e-6).toFixed(2) + 'ms.');
+  console.log('svg-font-to-js parse took ' + endParse[0] + 's, ' + (endParse[1] * 1e-6).toFixed(2) + 'ms.');
   return font;
 }
 
@@ -47,8 +45,7 @@ function prettifyCheck(options) {
 }
 
 function svgFontCheck(fontPath) {
-  const fontPathSplit = fontPath.split('.');
-  if (fontPathSplit[fontPathSplit.length - 1] !== 'svg') throw new Error('File passed not an SVG font.');
+  if (fontPath.indexOf('.svg') == -1) throw new Error('File passed not an SVG font.');
 }
 
 module.exports = fontToPaths;
