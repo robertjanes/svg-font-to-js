@@ -2,7 +2,7 @@
 
 Parses an SVG font to JS.
 
-Returns an JS array of glyph objects in the following format:
+Returns an array of glyph objects in the following format:
 
 ```javascript
 [
@@ -14,7 +14,7 @@ Returns an JS array of glyph objects in the following format:
 ]
 ```
 
-### Options
+## Options
 
 Options are passed as an object.
 
@@ -22,7 +22,7 @@ Options are passed as an object.
 svgFontToJson('font.svg', {prettify: true, benchmark: true});
 ```
 
-#### Prettify
+### Prettify
 
 Outputs cleaner SVG paths. Without prettify:
 
@@ -36,10 +36,10 @@ With prettify:
 'M 110 613 v 115 h 124 v -115 h -124 z'
 ```
 
-#### Benchmark
+### Benchmark
 
 Provides a report on the parse performance.
 
 ```shell
-svg-font-to-js parse took 0s, 0.56ms.
+svg-font-to-js took 0s, 0.57ms to parse test-font.svg (165 glyphs).
 ```

@@ -1,10 +1,3 @@
-/*
-  fontToPaths
-
-  Converts an SVG font file into an
-  array of SVG paths with labels.
-*/
-
 'use strict';
 const fs = require('fs');
 
@@ -33,10 +26,11 @@ function fontToPaths(fontPath, options) {
       path: prettifySvg ? prettifySvg(match[3]): match[3]
     });
   }
-  
+
   if (options.benchmark) {
     const endParse = process.hrtime(benchmark);
-    console.log('svg-font-to-js parse took ' + endParse[0] + 's, ' + (endParse[1] * 1e-6).toFixed(2) + 'ms.');
+    console.log(`svg-font-to-js took ${endParse[0]}s, ${(endParse[1] * 1e-6).toFixed(2)}` +
+      `ms to parse ${getFileName(fontPath)} (${font.length} glyphs).`);
   }
   return font;
 }
@@ -49,6 +43,10 @@ function prettifyCheck(options) {
 
 function svgFontCheck(fontPath) {
   if (fontPath.indexOf('.svg') == -1) throw new Error('File passed not an SVG font.');
+}
+
+function getFileName(path) {
+  return require('path').parse(path).base;
 }
 
 module.exports = fontToPaths;
