@@ -1,6 +1,6 @@
 {
   "name": "svg-font-to-json",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "svg-font-to-json",
   "main": "index.js",
   "scripts": {
